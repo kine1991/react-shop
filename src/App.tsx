@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import HeaderComponent from './header/header.component';
+import MainComponent from './main/main.component';
+import LayoutComponent from './helper/container/layout/layout.component';
+// import Button from 'react-bootstrap/Button'
 
-const App: React.FC = () => {
+const App: React.FunctionComponent  = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <HeaderComponent/>
+      <LayoutComponent>
+        <Switch>
+          <Route exact path="/" component={MainComponent} />
+          <Route path="/catalog/:categoryId" component={()=><h1>About</h1>} />
+          <Route path="/about" component={()=><h1>About</h1>} />
+          <Route component={() => <h2>NotMatch</h2>}/>
+        </Switch>
+      </LayoutComponent>
+    </React.Fragment>
+    
   );
 }
 
