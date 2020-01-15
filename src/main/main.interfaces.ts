@@ -1,13 +1,15 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { History } from 'history';
+// import { History } from 'history';
 
 export interface MainListProps extends RouteComponentProps<any> {
-    item: mainPageData,
-    // history: any,
-    // location: any,
-    // match: any
-     
+    items: mainPageData[],
+    getMainData: any,
+    clearData: any,
 }
+export interface MainProps extends RouteComponentProps<any> {
+    item: mainPageData,
+}
+
 export interface mainPageData {
     title: string,
     imageUrl: string,
