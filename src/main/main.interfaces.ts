@@ -3,8 +3,10 @@ import { RouteComponentProps } from 'react-router-dom';
 
 export interface MainListProps extends RouteComponentProps<any> {
     items: mainPageData[],
-    getMainData: any,
-    clearData: any,
+    isFetching: boolean,
+    getMainDataAsync: any,
+    // getMainData: any,
+    clearData?: any,
 }
 export interface MainProps extends RouteComponentProps<any> {
     item: mainPageData,

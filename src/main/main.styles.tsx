@@ -6,6 +6,17 @@ export const Styles = styled.div`
         grid-template-columns: repeat(6, 1fr);
         /* grid-template-rows: repeat(2, 1fr); */
         grid-gap: 3rem;
+
+        @media (max-width: 992px) {  
+            grid-gap: 2rem;
+        }
+        @media (max-width: 768px) {  
+            grid-gap: 1rem;
+        }
+        /* @media (max-width: 576px) {  
+            grid-column-end: span 6;
+            grid-row-end: span 6;
+        } */
     }
     .box {
         position: relative;
@@ -14,6 +25,22 @@ export const Styles = styled.div`
         background: whitesmoke;
         grid-column-end: span 2;
         grid-row-end: span 2;
+
+        @media (max-width: 992px) {  
+            grid-column-end: span 2;
+            grid-row-end: span 2;
+            grid-gap: 1rem;
+        }
+        @media (max-width: 768px) {  
+            grid-column-end: span 3;
+            grid-row-end: span 3;
+            grid-gap: 1rem;
+        }
+        @media (max-width: 576px) {  
+            grid-column-end: span 6;
+            grid-row-end: span 6;
+        }
+
         & > img {
             width: 100%;
             height: 100%;
@@ -42,4 +69,11 @@ export const Styles = styled.div`
         grid-column-end: span 3;
         grid-row-end: span 3;
     }
+    /* .spinner-container{
+        height: 60vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
 `;

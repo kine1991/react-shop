@@ -5,42 +5,36 @@ const INITIAL_STATE = {
     isFetching: false,
     errorMessage: undefined
 };
-// {
-//   title: 'Cars2',
-//   imageUrl: 'https://i.ibb.co/PYz6YgH/car4.jpg',
-//   id: 10,
-//   linkUrl: 'cars2'
-// }
   
-  const mainReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
-      case MainTypes.FETCH_COLLECTION_START:
-        return { 
-            ...state, 
-            isFetching: true,
-        };
-      case MainTypes.FETCH_COLLECTION_SUCCESS:
-        return { 
-            ...state, 
-            isFetching: false,
-            data: action.payload
-            // data: [...state.data, ...action.payload ]
-        };
-      case MainTypes.FETCH_COLLECTION_FAILURE:
-        return { 
-            ...state, 
-            isFetching: false,
-            errorMessage: action.payload
-        };
-      case MainTypes.CLEAR_DATA:
-        return { 
-            ...state,
-            data: action.payload
-        };
-      default:
-        return state;
-    }
-  };
+const mainReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case MainTypes.FETCH_MAIN_DATA_START:
+      return { 
+          ...state, 
+          isFetching: true,
+      };
+    case MainTypes.FETCH_MAIN_DATA_SUCCESS:
+      return { 
+          ...state, 
+          isFetching: false,
+          data: action.payload
+          // data: [...state.data, ...action.payload ]
+      };
+    case MainTypes.FETCH_MAIN_DATA_FAILURE:
+      return { 
+          ...state, 
+          isFetching: false,
+          errorMessage: action.payload
+      };
+    case MainTypes.CLEAR_DATA:
+      return { 
+          ...state,
+          data: action.payload
+      };
+    default:
+      return state;
+  }
+};
   
   export default mainReducer;
 

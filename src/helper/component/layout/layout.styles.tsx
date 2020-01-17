@@ -8,6 +8,7 @@ export const theme = {
 export const Styles = styled.div`
     .container {
         padding: 3rem;
+        /* background: greenyellow; */
         /* margin: 3rem; */
         /* background-color: ${props => props.theme.secondary}; */
         /* background-color: none; */
