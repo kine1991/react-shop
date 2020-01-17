@@ -1,26 +1,21 @@
 import React from 'react';
-// import { Styles } from './catalog.styles';
+
 import { useParams } from "react-router";
 import { connect } from 'react-redux';
 
 import { fetchCollectionAsync } from '../redux/catalog/catalog.action';
 import Spinner from '../helper/component/spinner/spinner.component';
+import styled from 'styled-components';
 // import { cars } from '../cars';
 // import { firestore } from '../firebase/firebase.utils'
-import styled from 'styled-components';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
-// import Container from 'react-bootstrap/Container'
+// import { Styles } from './catalog.styles';
+// import CatalogItem from './catalog-item/catalog-item.component';
+import CardCatalog from './card-catalog/card-catalog.component';
 
 const Styles = styled.div`
-    /* .wrapper {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-gap: 2rem;
-    } */
     .filter-content{
-        background: #DCDCDC;
-        height: 500px;
+        /* background: #DCDCDC; */
+        /* height: 500px; */
         display: flex;
         flex-direction: row;
 
@@ -34,7 +29,7 @@ const Styles = styled.div`
     }
     .filter{
         background: #C0C0C0;
-        height: 400px;
+        /* height: 400px; */
         flex-basis: 200px;
         margin-right: 3rem;
         @media (max-width: 1200px) {  
@@ -45,10 +40,41 @@ const Styles = styled.div`
         }
     }
     .content{
-        background: #A9A9A9;
-        height: 400px;
+        /* background: #A9A9A9; */
+        /* height: 400px; */
         flex: 1;
     }
+
+    .wrapper-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 3rem;
+
+        @media (max-width: 1200px) {
+            grid-gap: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: 992px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 2rem;
+        }
+        @media (max-width: 576px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+        
+    }
+
+    /* .item {
+        @media (max-width: 1200px) {
+            grid-gap: 2rem;
+        }
+        @media (max-width: 992px) {}
+        @media (max-width: 768px) {}
+        @media (max-width: 576px) {}
+    } */
 `;
 
 const CatalogComponent = ({items, isFetching, fetchCollectionAsync}) => {
@@ -56,7 +82,7 @@ const CatalogComponent = ({items, isFetching, fetchCollectionAsync}) => {
     React.useEffect(() => {
         fetchCollectionAsync()
     }, [fetchCollectionAsync])
-
+console.log(items);
     const { categoryId } = useParams();
 
     if (isFetching){
@@ -72,7 +98,7 @@ const CatalogComponent = ({items, isFetching, fetchCollectionAsync}) => {
                     <div className="wrapper-grid">
                     {
                         items.map(item => (
-                            <div key={item.id}>ff</div>
+                            <CardCatalog item={item} key={item.id}/>
                         ))
                     }
                     </div>

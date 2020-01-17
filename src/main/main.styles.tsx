@@ -13,10 +13,6 @@ export const Styles = styled.div`
         @media (max-width: 768px) {  
             grid-gap: 1rem;
         }
-        /* @media (max-width: 576px) {  
-            grid-column-end: span 6;
-            grid-row-end: span 6;
-        } */
     }
     .box {
         position: relative;

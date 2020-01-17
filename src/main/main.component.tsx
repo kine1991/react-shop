@@ -1,9 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import LayoutComponent from '../helper/component/layout/layout.component';
-// import { RouteComponentProps } from 'react-router-dom';
-// import { mainPageData } from './data';
-// import WithSpinner from '../helper/component/with-spinner.component'
 
 import { getMainDataAsync/*, clearData*/ } from '../redux/main/main.action';
 import SingleItem from './single-item/single-item';
@@ -71,3 +67,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(MainComponent);
 //         clearData();
 //     }
 // }, [clearData])
+
+// import { mainPageData } from './data';

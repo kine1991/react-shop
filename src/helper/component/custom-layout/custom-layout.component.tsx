@@ -2,12 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    max-width: 960px;
+    max-width: 1200px;
+    /* max-width: 960px; */
     margin: 3rem auto;
     /* background-color: #A9A9A9; */
     box-shadow: #696969;
 
     min-height: 400px;
+    
+    @media (max-width: 1200px) {
+        margin: 3rem;
+    }
     
     @media (max-width: 992px) {
         margin: 3rem 3rem;
