@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { SpinnerContainer } from './with-spinner.styles'
 
-const WrappedComponent = (WrappedComponent) => ({isFetching, ...otherProps}) => {
+const withSpinner = (WrappedComponent) => ({isFetching, ...otherProps}) => {
     if (isFetching) {
       return (
           <SpinnerContainer>
@@ -14,7 +14,7 @@ const WrappedComponent = (WrappedComponent) => ({isFetching, ...otherProps}) => 
     }
 }
 
-export default WrappedComponent;
+export default withSpinner;
 
 // const withSpinner = (WrappedComponent) => {
 //     const Spinner = ({isFetching, ...otherProps}) => {
