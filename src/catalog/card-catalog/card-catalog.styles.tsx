@@ -61,7 +61,8 @@ export const Card = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 10px;
+        font-size: 14px;
+        font-weight: 400;
     }
     &__btn {
         background-color: #998100;

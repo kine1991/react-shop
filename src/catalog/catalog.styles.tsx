@@ -14,7 +14,7 @@ export const Styles = styled.div`
         
     }
     .filter{
-        background: #C0C0C0;
+        /* background: #C0C0C0; */
         /* height: 400px; */
         flex-basis: 200px;
         margin-right: 3rem;

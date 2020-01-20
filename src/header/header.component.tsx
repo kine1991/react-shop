@@ -8,7 +8,7 @@ const HeaderComponent: React.FunctionComponent = () => {
     return (
         <Styles>
             <Navbar className="navbar" bg="light" expand="sm">
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="#home">Shop Car</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">

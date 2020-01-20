@@ -7,6 +7,7 @@ import { fetchCollectionAsync } from '../redux/catalog/catalog.action';
 import Spinner from '../helper/component/spinner/spinner.component';
 import { Styles } from './catalog.styles';
 import CardCatalog from './card-catalog/card-catalog.component';
+import FilterCatalog from './filter-catalog/filter-catalog.component'
 
 const CatalogComponent = ({items, isFetching, fetchCollectionAsync}) => {
 
@@ -23,7 +24,7 @@ console.log(items);
         <Styles>
             <div className="filter-content">
                 <div className="filter">
-                    filter
+                    <FilterCatalog/>
                 </div>
                 <div className="content">
                     <div className="wrapper-grid">
