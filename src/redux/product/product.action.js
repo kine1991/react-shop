@@ -29,7 +29,7 @@ export const fetchProductAsync = (productId) => (dispatch, getState) => {
 
     dispatch(clearProduct());
     dispatch(fetchProductStart());
-    const docRef = firestore.collection("cars").doc(productId);
+    const docRef = firestore.collection("shop_cars").doc(productId);
     docRef.get()
     .then(item => {
         dispatch(fetchProductSuccess({id: item.id, ...item.data()}))

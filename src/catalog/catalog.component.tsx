@@ -14,11 +14,9 @@ const CatalogComponent = ({items, isFetching, fetchCollectionAsync}) => {
     React.useEffect(() => {
         fetchCollectionAsync()
     }, [fetchCollectionAsync])
-console.log(items);
-    // const { categoryId } = useParams();
 
     if (isFetching){
-        return (<Spinner model="Spinner4" color="gray"/>)
+        return (<Spinner color="gray"/>)
     }
     return (
         <Styles>

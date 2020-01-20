@@ -12,7 +12,7 @@ const SpinnerComponent: React.FC<{color?: string, model?: string}> = ({model, co
         return (<SpinnerContainer><SpinnerSp color={color}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></SpinnerSp></SpinnerContainer>)
     } else if (model === 'Spinner4'){
         return (<SpinnerContainer><SpinnerDualRing color={color}/></SpinnerContainer>)
-    } else {
+    } else if (model === 'Spinner5'){
         return (
             <SpinnerContainer>
                 <div className="spinner-border" role="status">
@@ -20,6 +20,10 @@ const SpinnerComponent: React.FC<{color?: string, model?: string}> = ({model, co
                 </div>
             </SpinnerContainer>
         )
+    } else {
+        return (<SpinnerContainer><SpinnerDualRing color={color}/></SpinnerContainer>)
+        // return (<SpinnerContainer><SpinnerRipple color={color}><div></div><div></div></SpinnerRipple></SpinnerContainer>)
+        // return (<SpinnerContainer><SpinnerSp color={color}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></SpinnerSp></SpinnerContainer>)
     };
 }
 

@@ -11,7 +11,7 @@ import Spinner from '../../helper/component/spinner/spinner.component';
 
 const ProductComponent = ({data, isFetching, fetchProduct}) => {
     const { productId } = useParams();
-    const {goBack} = useHistory();
+    const {push} = useHistory();
     // console.log(location)
     React.useEffect(() => {
         fetchProduct(productId)
@@ -19,11 +19,11 @@ const ProductComponent = ({data, isFetching, fetchProduct}) => {
     // console.log('data, isFetching')
     // console.log(data, isFetching)
     if(!data){
-        return <Spinner/>
+        return <Spinner color="gray"/>
     }
     return (
         <Styles>
-            <Button onClick={goBack} variant="light"><FontAwesomeIcon icon={faArrowLeft} size="sm" className="cart" />  Back</Button>
+            <Button onClick={() => push('/catalog/cars')} variant="light"><FontAwesomeIcon icon={faArrowLeft} size="sm" className="cart" />  Back</Button>
             <div className="header">
                 <h1 className="header__title">{data.brand} {data.model}</h1>
                 <h1 className="header__price">${data.price}</h1>
@@ -35,10 +35,16 @@ const ProductComponent = ({data, isFetching, fetchProduct}) => {
                 </div>
                 <div className="content__body">
                     <div className="description">
-                        <strong>description</strong>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci sapiente reiciendis rem nemo earum est quo vero nam laboriosam, quis eius, cum quasi inventore amet veritatis delectus vitae facere suscipit.</p>
+                        <strong>{data.description.name}</strong>
+                        <p>{data.description.value}</p>
                     </div>
-                    <div className="property">
+                    {Object.keys(data.property).map(propertyField => (
+                        <div key={propertyField} className="property">
+                            <strong>{data.property[propertyField].name}</strong>
+                            <p>{data.property[propertyField].value}</p>
+                        </div>
+                    ))}
+                    {/* <div className="property">
                         <strong>bodyStyle</strong>
                         <p>{data.bodyStyle}</p>
                     </div>
@@ -61,7 +67,7 @@ const ProductComponent = ({data, isFetching, fetchProduct}) => {
                     <div className="property">
                         <strong>year</strong>
                         <p>{data.year}</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </Styles>

@@ -21,7 +21,7 @@ export const clearCollection = () => ({
 });
 
 export const fetchCollectionAsync = () => (dispatch, getState) => {
-    const docRef = firestore.collection("cars");
+    const docRef = firestore.collection("shop_cars");
     dispatch(clearCollection());
     dispatch(fetchCollectionStart());
     docRef.get()

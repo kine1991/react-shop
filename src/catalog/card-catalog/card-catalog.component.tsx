@@ -16,22 +16,12 @@ export const CatalogItem = ({item}) => {
                 <div className="card__name">
                     <div>{item.brand} {item.model}</div>
                 </div>
-                <div className="card__property">
-                    <strong>Body Style</strong>
-                    <div>{item.bodyStyle}</div>
-                </div>
-                <div className="card__property">
-                    <strong>Drive Train</strong>
-                    <div>{item.drivetrain}</div>
-                </div>
-                <div className="card__property">
-                    <strong>Color</strong>
-                    <div>{item.color}</div>
-                </div>
-                <div className="card__property">
-                    <strong>Transmission</strong>
-                    <div>{item.transmission}</div>
-                </div>
+                {Object.keys(item.property).slice(2).map(propertyField => (
+                    <div key={propertyField} className="card__property">
+                        <strong>{item.property[propertyField].name}</strong>
+                        <div>{item.property[propertyField].value}</div>
+                    </div>
+                ))}
                 <button onClick={() => push(`${pathname}/${item.id}`)} className="card__btn">Open</button>
                 <FontAwesomeIcon icon={faCartPlus} size="lg" className="cart" />
             </div>

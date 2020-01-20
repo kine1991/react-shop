@@ -16,37 +16,36 @@ const MainComponent: React.FunctionComponent<MainListProps> = ({items, isFetchin
     }, [getMainDataAsync])
 
     const seedData = async () => {
-        // cars.forEach( async item => {
-        //     await firestore.collection('shop_cars').add(item)
-        // })
-        const filter = {
-            transmission: {
-                name: 'transmission',
-                value: ['manual', 'automatic']
-            },
-            drivetrain: {
-                name: 'drivetrain',
-                value: ['rwd', 'awd', 'fwd']
-            }, 
-            fuelType: {
-                name: 'fluel type',
-                value: ['diesel', 'gasoline', 'gas', 'electric']
-            },
-            color: {
-                name: 'color',
-                value: ['white', 'black', 'blue', 'gray', 'red']
-            },
-            bodyStyle: {
-                name: 'body style',
-                value: ['sedan', 'coupe', 'convertible', 'suv', 'sport', 'wagon', 'minivan']
-            }
-        }
-        await firestore.collection('shop_filter').doc('filter').set(filter)
-        // await firestore.collection('shop_filter').doc("LA")
+        cars.forEach( async item => {
+            await firestore.collection('shop_cars').add(item)
+        })
+        // const filter = {
+        //     transmission: {
+        //         name: 'transmission',
+        //         value: ['manual', 'automatic']
+        //     },
+        //     drivetrain: {
+        //         name: 'drivetrain',
+        //         value: ['rwd', 'awd', 'fwd']
+        //     }, 
+        //     fuelType: {
+        //         name: 'fluel type',
+        //         value: ['diesel', 'gasoline', 'gas', 'electric']
+        //     },
+        //     color: {
+        //         name: 'color',
+        //         value: ['white', 'black', 'blue', 'gray', 'red']
+        //     },
+        //     bodyStyle: {
+        //         name: 'body style',
+        //         value: ['sedan', 'coupe', 'convertible', 'suv', 'sport', 'wagon', 'minivan']
+        //     }
+        // }
+        // await firestore.collection('shop_filter').doc('filter').set(filter)
     }
 
     if (isFetching){
-        return (<Spinner model="Spinner2" color="gray"/>)
+        return (<Spinner color="gray"/>)
     }
     return (
         <Styles>
