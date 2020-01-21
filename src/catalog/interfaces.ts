@@ -1,3 +1,1 @@
-export interface x {
-    
-}
+export interface x {}

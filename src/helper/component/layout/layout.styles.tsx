@@ -1,9 +1,9 @@
-import styled /*{ ThemeProvider }*/ from 'styled-components';
+import styled from 'styled-components';
 
 export const theme = {
-    primary: 'red',
-    secondary: 'white'
-}
+  primary: 'red',
+  secondary: 'white'
+};
 
 export const Styles = styled.div`
     .container {

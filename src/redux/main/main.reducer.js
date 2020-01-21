@@ -1,42 +1,42 @@
 import MainTypes from './main.types';
 
 const INITIAL_STATE = {
-    data: [],
-    isFetching: false,
-    errorMessage: undefined
+  data: [],
+  isFetching: false,
+  errorMessage: undefined
 };
-  
+
 const mainReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case MainTypes.FETCH_MAIN_DATA_START:
-      return { 
-          ...state, 
-          isFetching: true,
+      return {
+        ...state,
+        isFetching: true
       };
     case MainTypes.FETCH_MAIN_DATA_SUCCESS:
-      return { 
-          ...state, 
-          isFetching: false,
-          data: action.payload
-          // data: [...state.data, ...action.payload ]
+      return {
+        ...state,
+        isFetching: false,
+        data: action.payload
+        // data: [...state.data, ...action.payload ]
       };
     case MainTypes.FETCH_MAIN_DATA_FAILURE:
-      return { 
-          ...state, 
-          isFetching: false,
-          errorMessage: action.payload
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload
       };
     case MainTypes.CLEAR_DATA:
-      return { 
-          ...state,
-          data: action.payload
+      return {
+        ...state,
+        data: action.payload
       };
     default:
       return state;
   }
 };
-  
-  export default mainReducer;
+
+export default mainReducer;
 
 //   export const mainPageData = {
 //     data: [
