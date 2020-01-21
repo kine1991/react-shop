@@ -6,6 +6,8 @@ import MainComponent from './main/main.component';
 import CustomLayoutComponent from './helper/component/custom-layout/custom-layout.component';
 import CatalogComponent from './catalog/catalog.component';
 import ProductComponent from './catalog/product/product.component';
+import LoginComponent from './auth/login/login.component';
+import RegisterComponent from './auth/register/register.component';
 // import Button from 'react-bootstrap/Button'
 
 const App: React.FunctionComponent = () => {
@@ -15,6 +17,8 @@ const App: React.FunctionComponent = () => {
       <CustomLayoutComponent>
         <Switch>
           <Route exact path="/" component={MainComponent} />
+          <Route path="/login" component={LoginComponent} />
+          <Route path="/register" component={RegisterComponent} />
           <Route exact path="/catalog/:categoryId" component={CatalogComponent} />
           <Route exact path="/catalog/:categoryId/:productId" component={ProductComponent} />
           <Route path="/about" component={() => <h1>About</h1>} />

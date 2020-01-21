@@ -1,3 +1,5 @@
+import {  } from './user.types'
+
 const INITIAL_STATE = {
   items: 'ggg222'
 };

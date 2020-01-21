@@ -34,6 +34,7 @@ module.exports = {
     ],
     "rules": {
         "function-paren-newline": "off",
+        "react/jsx-one-expression-per-line": "off",
         // "react/jsx-one-expression-per-line": "always",
         "object-curly-newline": "off",
         "prettier/prettier": "error",
