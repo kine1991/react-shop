@@ -1,14 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import { loginAsync } from '../../redux/user/user.action';
 
-const LoginComponent = () => {
+const LoginComponent = ({ isFetchingForBtn, loginUser }) => {
   const { register, handleSubmit } = useForm();
   const onSubmit = data => {
-    console.log('data');
-    console.log(data);
+    loginUser(data);
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -22,11 +24,26 @@ const LoginComponent = () => {
         <Form.Label>Password</Form.Label>
         <Form.Control name="password" ref={register} type="password" placeholder="Password" />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
+      <Button type="submit" variant="primary" disabled={isFetchingForBtn}>
+        {isFetchingForBtn ? (
+          <>
+            <span className="mr-3">Login</span>
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          </>
+        ) : (
+          <span>Login</span>
+        )}
       </Button>
     </Form>
   );
 };
 
-export default LoginComponent;
+const mapStateToProps = state => ({
+  isFetchingForBtn: state.user.isFetchingForBtn
+});
+
+const mapDispatchToProps = dispatch => ({
+  loginUser: data => dispatch(loginAsync(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

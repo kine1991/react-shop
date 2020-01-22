@@ -1,18 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
 
-import { auth, firestore } from '../../firebase/firebase.utils';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import { registerAsync } from '../../redux/user/user.action';
 
-const RegisterComponent = () => {
+const RegisterComponent = ({ isFetchingForBtn, registerUser }) => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => {
-    console.log('data');
-    console.log(data);
 
-    // auth.createUserWithEmailAndPassword()
+  const onSubmit = data => {
+    registerUser(data);
   };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group controlId="formBasicEmail">
@@ -34,11 +35,26 @@ const RegisterComponent = () => {
         <Form.Label>Password</Form.Label>
         <Form.Control name="password" ref={register} type="password" placeholder="Password" />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
+      <Button type="submit" variant="primary" disabled={isFetchingForBtn}>
+        {isFetchingForBtn ? (
+          <>
+            <span className="mr-3">Register</span>
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+          </>
+        ) : (
+          <span>Register</span>
+        )}
       </Button>
     </Form>
   );
 };
 
-export default RegisterComponent;
+const mapStateToProps = state => ({
+  isFetchingForBtn: state.user.isFetchingForBtn
+});
+
+const mapDispatchToProps = dispatch => ({
+  registerUser: data => dispatch(registerAsync(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterComponent);

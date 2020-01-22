@@ -1,19 +1,28 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import HeaderComponent from './header/header.component';
 import MainComponent from './main/main.component';
-// import LayoutComponent from './helper/component/layout/layout.component';
 import CustomLayoutComponent from './helper/component/custom-layout/custom-layout.component';
 import CatalogComponent from './catalog/catalog.component';
 import ProductComponent from './catalog/product/product.component';
 import LoginComponent from './auth/login/login.component';
 import RegisterComponent from './auth/register/register.component';
-// import Button from 'react-bootstrap/Button'
+import Spinner from './helper/component/spinner/spinner.component';
+import { setCurrentUserAsync, logoutAsync } from './redux/user/user.action';
 
-const App: React.FunctionComponent = () => {
+const App = ({ currentUser, isFetching, setCurrentUser, logout }) => {
+  React.useEffect(() => {
+    setCurrentUser();
+  }, [setCurrentUser]);
+
+  if (isFetching) {
+    return <Spinner />;
+  }
   return (
     <React.Fragment>
-      <HeaderComponent />
+      <HeaderComponent currentUser={currentUser} logout={logout} />
       <CustomLayoutComponent>
         <Switch>
           <Route exact path="/" component={MainComponent} />
@@ -29,4 +38,14 @@ const App: React.FunctionComponent = () => {
   );
 };
 
-export default App;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+  isFetching: state.user.isFetching
+});
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: () => dispatch(setCurrentUserAsync()),
+  logout: () => dispatch(logoutAsync())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

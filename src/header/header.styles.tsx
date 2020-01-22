@@ -14,4 +14,19 @@ export const Styles = styled.div`
       color: #bbb;
     }
   }
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 1px solid red;
+    /* background: red; */
+  }
+  .container-image {
+    height: 2rem;
+  }
+
+  .logout {
+    color: red;
+  }
 `;
