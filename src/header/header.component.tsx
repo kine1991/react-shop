@@ -28,7 +28,11 @@ const HeaderComponent = ({ currentUser, logout }) => {
               // <Nav.Link onClick={logout}>Logout</Nav.Link>
               <>
                 <NavDropdown className="ml-3" title={currentUser.fullName} id="basic-nav-dropdown">
-                  <NavDropdown.Item className="text-danger" onClick={logout}>Logout</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item className="text-danger" onClick={logout}>
+                    Logout
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <div className="container-image">
                   <Image className="image" src={currentUser.imageUrl} roundedCircle />

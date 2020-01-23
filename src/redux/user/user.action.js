@@ -1,5 +1,5 @@
 import userTypes from './user.types';
-import { auth, firestore } from '../../firebase/firebase.utils';
+import { auth, firestore, signInWithGoogle } from '../../firebase/firebase.utils';
 
 // SET CURRENT USER
 const setCurrentUserStart = () => ({
@@ -31,6 +31,41 @@ export const setCurrentUserAsync = () => dispatch => {
       dispatch(setCurrentUserFailure(error));
     }
   );
+};
+
+// SIGN UP WITH GOOGLE
+const signUpWithGoogleStart = () => ({
+  type: userTypes.SIGN_UP_WITH_GOOGLE_START
+});
+
+const signUpWithGoogleSuccess = () => ({
+  type: userTypes.SIGN_UP_WITH_GOOGLE_SUCCESS
+});
+
+const signUpWithGoogleFailure = error => ({
+  type: userTypes.SIGN_UP_WITH_GOOGLE_FAILURE,
+  payload: error
+});
+
+export const signUpWithGoogleAsync = () => async dispatch => {
+  dispatch(signUpWithGoogleStart());
+  try {
+    const userData = await signInWithGoogle();
+
+    if (userData.additionalUserInfo.isNewUser) {
+      setUserProfile({
+        email: userData.user.email,
+        fullName: userData.user.displayName,
+        imageUrl: userData.user.photoURL,
+        userId: userData.user.uid,
+        dispatch
+      });
+    } else {
+      dispatch(signUpWithGoogleSuccess());
+    }
+  } catch (error) {
+    dispatch(signUpWithGoogleFailure(error));
+  }
 };
 
 // LOGIN
@@ -110,7 +145,6 @@ export const logoutAsync = () => async dispatch => {
 // HELPER FUNCTIONS
 const setUserProfile = async ({ email, fullName, imageUrl, userId, dispatch }) => {
   const profileRef = firestore.collection('profiles').doc(userId);
-
   try {
     await profileRef.set({
       email: email,

@@ -28,6 +28,24 @@ const userReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
 
+    // LOGIN
+    case userTypes.LOGIN_START:
+      return {
+        ...state,
+        isFetchingForBtn: true
+      };
+    case userTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        isFetchingForBtn: false
+      };
+    case userTypes.LOGIN_FAILURE:
+      return {
+        ...state,
+        isFetchingForBtn: false,
+        error: action.payload
+      };
+
     // REGISTER
     case userTypes.REGISTER_START:
       return {
@@ -46,18 +64,18 @@ const userReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
 
-    // LOGIN
-    case userTypes.LOGIN_START:
+    // SING UP WITH GOOGLE
+    case userTypes.SIGN_UP_WITH_GOOGLE_START:
       return {
         ...state,
         isFetchingForBtn: true
       };
-    case userTypes.LOGIN_SUCCESS:
+    case userTypes.SIGN_UP_WITH_GOOGLE_SUCCESS:
       return {
         ...state,
         isFetchingForBtn: false
       };
-    case userTypes.LOGIN_FAILURE:
+    case userTypes.SIGN_UP_WITH_GOOGLE_FAILURE:
       return {
         ...state,
         isFetchingForBtn: false,

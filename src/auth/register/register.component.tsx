@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import { registerAsync } from '../../redux/user/user.action';
+import { registerAsync, signUpWithGoogleAsync } from '../../redux/user/user.action';
 
-const RegisterComponent = ({ isFetchingForBtn, registerUser }) => {
+const RegisterComponent = ({ isFetchingForBtn, registerUser, signUpWithGoogle }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = data => {
@@ -35,7 +35,7 @@ const RegisterComponent = ({ isFetchingForBtn, registerUser }) => {
         <Form.Label>Password</Form.Label>
         <Form.Control name="password" ref={register} type="password" placeholder="Password" />
       </Form.Group>
-      <Button type="submit" variant="primary" disabled={isFetchingForBtn}>
+      <Button block type="submit" variant="primary" disabled={isFetchingForBtn}>
         {isFetchingForBtn ? (
           <>
             <span className="mr-3">Register</span>
@@ -45,6 +45,7 @@ const RegisterComponent = ({ isFetchingForBtn, registerUser }) => {
           <span>Register</span>
         )}
       </Button>
+      <Button block onClick={signUpWithGoogle} type="button" variant="danger" disabled={isFetchingForBtn}>With Google</Button>
     </Form>
   );
 };
@@ -54,7 +55,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  registerUser: data => dispatch(registerAsync(data))
+  registerUser: data => dispatch(registerAsync(data)),
+  signUpWithGoogle: () => dispatch(signUpWithGoogleAsync())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterComponent);
