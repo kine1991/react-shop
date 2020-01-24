@@ -11,12 +11,19 @@ import LoginComponent from './auth/login/login.component';
 import RegisterComponent from './auth/register/register.component';
 import Spinner from './helper/component/spinner/spinner.component';
 import { setCurrentUserAsync, logoutAsync } from './redux/user/user.action';
+import { loadCartFromLS } from './redux/cart/cart.action';
 import SettingsComponent from './settings/settings.component';
+import CartComponent from './cart/cart.component';
 
-const App = ({ currentUser, isFetching, setCurrentUser, logout }) => {
+const App = ({ currentUser, isFetching, cartItems, setCurrentUser, loadCartFromLS, logout }) => {
   React.useEffect(() => {
     setCurrentUser();
   }, [setCurrentUser]);
+
+  React.useEffect(() => {
+    const loadCardFromLS = JSON.parse(localStorage.getItem('car-shop-cartItems')!);
+    loadCartFromLS(loadCardFromLS);
+  }, [loadCartFromLS]);
 
   if (isFetching) {
     return <Spinner />;
@@ -29,6 +36,7 @@ const App = ({ currentUser, isFetching, setCurrentUser, logout }) => {
           <Route exact path="/" component={MainComponent} />
           <Route path="/login" component={LoginComponent} />
           <Route path="/register" component={RegisterComponent} />
+          <Route path="/cart" component={CartComponent} />
           <Route exact path="/catalog/:categoryId" component={CatalogComponent} />
           <Route exact path="/catalog/:categoryId/:productId" component={ProductComponent} />
           <Route path="/about" component={() => <h1>About</h1>} />
@@ -42,11 +50,13 @@ const App = ({ currentUser, isFetching, setCurrentUser, logout }) => {
 
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser,
-  isFetching: state.user.isFetching
+  isFetching: state.user.isFetching,
+  cartItems: state.cart.cartItems
 });
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: () => dispatch(setCurrentUserAsync()),
+  loadCartFromLS: data => dispatch(loadCartFromLS(data)),
   logout: () => dispatch(logoutAsync())
 });
 

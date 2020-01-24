@@ -82,6 +82,18 @@ const userReducer = (state = INITIAL_STATE, action) => {
         error: action.payload
       };
 
+    // EDIT PROFILE
+    case userTypes.EDIT_PROFILE_SUCCESS:
+      return {
+        ...state,
+        currentUser: { ...state.currentUser, ...action.payload }
+      };
+    case userTypes.EDIT_PROFILE_FAILURE:
+      return {
+        ...state,
+        error: action.payload
+      };
+
     // LOGOUT
     case userTypes.LOG_OUT_START:
       return {

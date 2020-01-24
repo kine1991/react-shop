@@ -142,6 +142,33 @@ export const logoutAsync = () => async dispatch => {
   }
 };
 
+// EDIT PROFILE
+const editProfileSuccess = changedData => ({
+  type: userTypes.EDIT_PROFILE_SUCCESS,
+  payload: changedData
+});
+
+const editProfileFailure = error => ({
+  type: userTypes.EDIT_PROFILE_FAILURE,
+  payload: error
+});
+
+export const editProfileAcync = data => async dispatch => {
+  const { fullName, imageUrl, userId } = data;
+  try {
+    await firestore
+      .collection('profiles')
+      .doc(userId)
+      .update({
+        fullName,
+        imageUrl
+      });
+    dispatch(editProfileSuccess({ fullName, imageUrl }));
+  } catch (error) {
+    dispatch(editProfileFailure(error));
+  }
+};
+
 // HELPER FUNCTIONS
 const setUserProfile = async ({ email, fullName, imageUrl, userId, dispatch }) => {
   const profileRef = firestore.collection('profiles').doc(userId);

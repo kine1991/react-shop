@@ -21,8 +21,8 @@ const HeaderComponent = ({ currentUser, logout }) => {
             <Nav.Link as={Link} to="/">
               Main
             </Nav.Link>
-            <Nav.Link as={Link} to="/about">
-              About
+            <Nav.Link as={Link} to="/cart">
+              Cart
             </Nav.Link>
             {currentUser ? (
               // <Nav.Link onClick={logout}>Logout</Nav.Link>
