@@ -8,9 +8,9 @@ export const Styles = styled.div`
 
   .navbar-brand,
   .navbar-nav .nav-link {
-    color: #41b;
+    /* color: #41b; */
 
-    &:hober {
+    &:hover {
       color: #bbb;
     }
   }

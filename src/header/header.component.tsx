@@ -28,7 +28,9 @@ const HeaderComponent = ({ currentUser, logout }) => {
               // <Nav.Link onClick={logout}>Logout</Nav.Link>
               <>
                 <NavDropdown className="ml-3" title={currentUser.fullName} id="basic-nav-dropdown">
-                  <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/settings/profile">Profile</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/settings/">Settings</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/settings/zzz">ZZZ</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item className="text-danger" onClick={logout}>
                     Logout

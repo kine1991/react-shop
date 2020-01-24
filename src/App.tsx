@@ -11,6 +11,7 @@ import LoginComponent from './auth/login/login.component';
 import RegisterComponent from './auth/register/register.component';
 import Spinner from './helper/component/spinner/spinner.component';
 import { setCurrentUserAsync, logoutAsync } from './redux/user/user.action';
+import SettingsComponent from './settings/settings.component';
 
 const App = ({ currentUser, isFetching, setCurrentUser, logout }) => {
   React.useEffect(() => {
@@ -31,6 +32,7 @@ const App = ({ currentUser, isFetching, setCurrentUser, logout }) => {
           <Route exact path="/catalog/:categoryId" component={CatalogComponent} />
           <Route exact path="/catalog/:categoryId/:productId" component={ProductComponent} />
           <Route path="/about" component={() => <h1>About</h1>} />
+          <Route path="/settings" component={SettingsComponent} />
           <Route component={() => <h2>NotMatch</h2>} />
         </Switch>
       </CustomLayoutComponent>

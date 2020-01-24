@@ -19,7 +19,7 @@ const RegisterComponent = ({ isFetchingForBtn, registerUser, signUpWithGoogle })
       <Form.Group controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" name="email" ref={register} placeholder="Enter email" />
-        <Form.Text className="text-muted">We will never share your email with anyone else.</Form.Text>
+        {/* <Form.Text className="text-muted">We will never share your email with anyone else.</Form.Text> */}
       </Form.Group>
 
       <Form.Group controlId="formBasicPassword">
