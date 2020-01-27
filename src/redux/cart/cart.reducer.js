@@ -11,6 +11,18 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cartItems: addItemToCardHelper(state.cartItems, action.payload)
       };
+    case cartTypes.DELETE_ITEM:
+      return {
+        ...state,
+        cartItems: deleteItemFromCartHelper(state.cartItems, action.payload)
+      };
+    case cartTypes.CLEAR_ITEM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(cartItem => {
+          return cartItem.id !== action.payload;
+        })
+      };
     case cartTypes.LOAD_CART_FROM_LS:
       return {
         ...state,
@@ -22,6 +34,26 @@ const cartReducer = (state = INITIAL_STATE, action) => {
 };
 
 // HELPER
+const deleteItemFromCartHelper = (cartItems, item) => {
+  const existingItem = cartItems.find(cartItem => {
+    return cartItem.id === item.id;
+  });
+  if (existingItem.quantity === 1) {
+    return cartItems.filter(cartItem => {
+      return cartItem.id !== item.id;
+    });
+  }
+  if (existingItem.quantity > 1) {
+    return cartItems.map(cartItem => {
+      if (cartItem.id === item.id) {
+        return { ...cartItem, quantity: cartItem.quantity - 1 };
+      } else {
+        return cartItem; // безполезное действие
+      }
+    });
+  }
+};
+
 const addItemToCardHelper = (cartItems, item) => {
   const existingItem = cartItems.find(cartItem => {
     return cartItem.id === item.id;

@@ -27,7 +27,8 @@ export const Card = styled.div`
       right: 1rem;
       opacity: 0;
 
-      :active {
+      &:hover,
+      &:active {
         color: #7f6b00;
       }
     }

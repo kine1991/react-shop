@@ -14,7 +14,7 @@ export const CatalogItem = ({ item, cartItems, addItemToCart }) => {
   } = useHistory();
 
   React.useEffect(() => {
-    console.log('fdfdfd');
+    // console.log('kkk');
     localStorage.setItem('car-shop-cartItems', JSON.stringify(cartItems));
   }, [addItemToCart, cartItems]);
 
@@ -46,7 +46,7 @@ export const CatalogItem = ({ item, cartItems, addItemToCart }) => {
 
 const mapStateToProps = state => ({
   cartItems: state.cart.cartItems
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   addItemToCart: data => dispatch(addItemToCart(data))

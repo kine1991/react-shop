@@ -5,6 +5,16 @@ export const addItemToCart = item => ({
   payload: item
 });
 
+export const deleteItemFromCart = item => ({
+  type: cartTypes.DELETE_ITEM,
+  payload: item
+});
+
+export const clearItemFromCart = itemId => ({
+  type: cartTypes.CLEAR_ITEM_CART,
+  payload: itemId
+});
+
 export const loadCartFromLS = items => ({
   type: cartTypes.LOAD_CART_FROM_LS,
   payload: items
