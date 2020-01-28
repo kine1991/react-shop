@@ -50,7 +50,7 @@ const MainComponent: React.FunctionComponent<MainListProps> = ({ items, isFetchi
   return (
     <Styles>
       <div className="wrapper">
-        <button onClick={seedData}>seed</button>
+        {/* <button onClick={seedData}>seed</button> */}
         {items.map(item => (
           <SingleItem item={item} {...otherProps} key={item.id} />
         ))}

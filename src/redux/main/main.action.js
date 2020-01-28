@@ -24,7 +24,7 @@ export const getMainDataAsync = () => (dispatch, getState) => {
   // }
   // console.log('getState', cacheMainData);
 
-  const docRef = firestore.collection('maindata');
+  const docRef = firestore.collection('main_data');
   dispatch(clearData());
   dispatch(getMainDataStart());
 

@@ -16,7 +16,7 @@ export interface mainPageData {
   title: string;
   imageUrl: string;
   id: number;
-  linkUrl: string;
+  link: string;
   size?: string;
 }
 

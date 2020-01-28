@@ -37,8 +37,8 @@ const App = ({ currentUser, isFetching, cartItems, setCurrentUser, loadCartFromL
           <Route path="/login" component={LoginComponent} />
           <Route path="/register" component={RegisterComponent} />
           <Route path="/cart" component={CartComponent} />
-          <Route exact path="/catalog/:categoryId" component={CatalogComponent} />
-          <Route exact path="/catalog/:categoryId/:productId" component={ProductComponent} />
+          <Route exact path="/catalog" component={CatalogComponent} />
+          <Route exact path="/catalog/:productId" component={ProductComponent} />
           <Route path="/about" component={() => <h1>About</h1>} />
           <Route path="/settings" component={SettingsComponent} />
           <Route component={() => <h2>NotMatch</h2>} />
