@@ -3,16 +3,25 @@ import { connect } from 'react-redux';
 
 // import { useParams } from "react-router";
 
-import { fetchCollectionAsync } from '../redux/catalog/catalog.action';
+import { fetchCollectionAsync, fetchCollectionFilterAsync } from '../redux/catalog/catalog.action';
 import Spinner from '../helper/component/spinner/spinner.component';
 import { Styles } from './catalog.styles';
 import CardCatalog from './card-catalog/card-catalog.component';
 import FilterCatalog from './filter-catalog/filter-catalog.component';
 
-const CatalogComponent = ({ items, isFetching, fetchCollectionAsync }) => {
+const CatalogComponent = ({ items, isFetching, fetchCollectionAsync, fetchCollectionFilterAsync }) => {
+  const [filter, setFilter] = React.useState();
   React.useEffect(() => {
-    fetchCollectionAsync();
-  }, [fetchCollectionAsync]);
+    fetchCollectionFilterAsync(filter);
+  }, []);
+
+  React.useEffect(() => {
+    fetchCollectionFilterAsync(filter);
+    // if (filter) {
+    //   // console.log('filter');
+    //   // console.log(filter);
+    // }
+  }, [filter]);
 
   if (isFetching) {
     return <Spinner color="gray" />;
@@ -21,7 +30,7 @@ const CatalogComponent = ({ items, isFetching, fetchCollectionAsync }) => {
     <Styles>
       <div className="filter-content">
         <div className="filter">
-          <FilterCatalog />
+          <FilterCatalog setFilter={setFilter} />
         </div>
         <div className="content">
           <div className="wrapper-grid">
@@ -41,7 +50,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionAsync: () => dispatch(fetchCollectionAsync())
+  fetchCollectionAsync: () => dispatch(fetchCollectionAsync()),
+  fetchCollectionFilterAsync: filter => dispatch(fetchCollectionFilterAsync(filter))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CatalogComponent);

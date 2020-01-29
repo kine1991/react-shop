@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import { firestore } from '../../firebase/firebase.utils';
@@ -11,12 +12,19 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import { Styles } from './filter-catalog.styles';
+// import { fetchCollectionFilterAsync } from '../../redux/catalog/catalog.action';
 
-export const FilterCatalog = () => {
+export const FilterCatalog = ({ setFilter }) => {
   const [data, setData] = React.useState();
-  const [query, setQuery] = React.useState({ color: [], bodyStyle: [], drivetrain: [], fuelType: [], transmission: [] });
+  const [query, setQuery] = React.useState({ color: [], bodyStyle: [], driveTrain: [], fuelType: [], transmission: [] });
   const isMounted = React.useRef(true);
   let history = useHistory();
+
+  // React.useEffect(() => {
+  //   console.log('data');
+  //   console.log(data);
+  //   // fetchCollectionFilterAsync(query);
+  // }, [data]);
 
   React.useEffect(() => {
     firestore
@@ -40,12 +48,15 @@ export const FilterCatalog = () => {
     Object.keys(parsed).forEach(field => {
       queryObject[field] = parsed[field].split(',');
     });
+    // console.log('queryObject');
+    // console.log(queryObject);
     setQuery({ ...query, ...queryObject });
   }, [history.location.search]);
 
   React.useEffect(() => {
     // console.log('query');
     // console.log(query);
+    setFilter(query);
   }, [query]);
 
   const setParams = () => {
@@ -56,6 +67,8 @@ export const FilterCatalog = () => {
   };
 
   const handleChange = (e, group) => {
+    // console.log('group');
+    // console.log(group);
     if (e.target.checked) {
       setQuery({
         ...query,
@@ -87,6 +100,8 @@ export const FilterCatalog = () => {
                 <Typography>{data[group].name}</Typography>
               </ExpansionPanelSummary>
               {data[group].value.map(item => {
+                // console.log('---', query[group]);
+                // console.log('+++', item);
                 return (
                   <ExpansionPanelDetails key={item}>
                     <FormControlLabel control={<Checkbox checked={query[group].includes(item)} value={item} onClick={e => handleChange(e, group)} color="primary" />} label={item} />
@@ -97,7 +112,7 @@ export const FilterCatalog = () => {
           );
         })}
         <Button className="mt-3" fullWidth onClick={() => setParams()} variant="contained" color="primary">
-          Find
+          Apply
         </Button>
         <Button className="mt-3" fullWidth variant="contained">
           Clear
@@ -106,5 +121,9 @@ export const FilterCatalog = () => {
     </Styles>
   );
 };
+
+// const mapDispatchToProps = dispatch => ({
+//   fetchCollectionFilterAsync: filter => dispatch(fetchCollectionFilterAsync(filter))
+// });
 
 export default FilterCatalog;
