@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import { firestore } from '../../firebase/firebase.utils';
@@ -41,34 +41,40 @@ export const FilterCatalog = ({ setFilter }) => {
     };
   }, [setData]);
 
+  // Subscribe on react-router
   React.useEffect(() => {
-    // console.log(history.location.search);
     const parsed = queryString.parse(history.location.search);
     const queryObject = {};
     Object.keys(parsed).forEach(field => {
       queryObject[field] = parsed[field].split(',');
     });
-    // console.log('queryObject');
-    // console.log(queryObject);
     setQuery({ ...query, ...queryObject });
+    // console.log('query', query);
+    // setParams();
   }, [history.location.search]);
 
   React.useEffect(() => {
-    // console.log('query');
-    // console.log(query);
+    console.log('query');
+    console.log(query);
+    setParams();
     setFilter(query);
-  }, [query]);
+  }, [query, setFilter]);
 
   const setParams = () => {
     const searchString = queryString.stringify(query, { arrayFormat: 'comma' });
+    console.log(searchString);
+    // if (searchString) {
     history.push({
       search: searchString
     });
+    // }
+  };
+
+  const clearParams = () => {
+    console.log('clear');
   };
 
   const handleChange = (e, group) => {
-    // console.log('group');
-    // console.log(group);
     if (e.target.checked) {
       setQuery({
         ...query,
@@ -111,10 +117,10 @@ export const FilterCatalog = ({ setFilter }) => {
             </ExpansionPanel>
           );
         })}
-        <Button className="mt-3" fullWidth onClick={() => setParams()} variant="contained" color="primary">
+        {/* <Button className="mt-3" fullWidth onClick={() => setParams()} variant="contained" color="primary">
           Apply
-        </Button>
-        <Button className="mt-3" fullWidth variant="contained">
+        </Button> */}
+        <Button className="mt-3" onClick={() => clearParams()} fullWidth variant="contained">
           Clear
         </Button>
       </div>

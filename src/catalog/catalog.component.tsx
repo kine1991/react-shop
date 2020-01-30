@@ -13,7 +13,7 @@ const CatalogComponent = ({ items, isFetching, fetchCollectionAsync, fetchCollec
   const [filter, setFilter] = React.useState();
   React.useEffect(() => {
     fetchCollectionFilterAsync(filter);
-  }, []);
+  }, [fetchCollectionFilterAsync, filter]);
 
   React.useEffect(() => {
     fetchCollectionFilterAsync(filter);
@@ -21,7 +21,7 @@ const CatalogComponent = ({ items, isFetching, fetchCollectionAsync, fetchCollec
     //   // console.log('filter');
     //   // console.log(filter);
     // }
-  }, [filter]);
+  }, [filter, fetchCollectionFilterAsync]);
 
   if (isFetching) {
     return <Spinner color="gray" />;

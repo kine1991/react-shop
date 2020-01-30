@@ -36,78 +36,122 @@ export const fetchCollectionAsync = () => (dispatch, getState) => {
     .catch(error => dispatch(fetchCollectionFailure(error)));
 };
 
-export const fetchCollectionFilterAsync = filter => dispatch => {
+export const fetchCollectionFilterAsync = filter => async dispatch => {
   if (filter) {
-    console.log('filter');
-    console.log(filter);
-    const filterBy = [];
-    const filterPromises = [];
+    const allFilterValue = [];
     Object.keys(filter).forEach(field => {
       if (filter[field].length) {
-        console.log('field', field);
         filter[field].forEach(value => {
-          // console.log(field, value);
-          filterPromises.push(
-            firestore
-              .collection('shop_cars')
-              .where(`property.${field}.value`, '==', `${value}`)
-              .get()
-          );
+          allFilterValue.push(value);
         });
-        // filterBy[field] = filter[field];
-        // filterPromises.push(firestore.collection('shop_cars').where(`${field}`, '==', ``));
       }
     });
-    Promise.all(filterPromises)
-      .then(arrayByFiltering => {
-        const arr = [];
-        arrayByFiltering.forEach(querySnapshot => {
-          querySnapshot.forEach(function(doc) {
-            const found = arr.some(el => el.id === doc.id); // если в массиве есть елемент с таким id то не добавлять
-            if (!found) arr.push({ id: doc.id, ...doc.data() });
+
+    // Helper
+    const helperCutArrays = async (filterPromises, dispatch) => {
+      const arrayByFiltering = await Promise.all(filterPromises);
+      const obj = {};
+      arrayByFiltering.forEach((querySnapshot, i) => {
+        obj[`arr-${i}`] = [];
+        querySnapshot.forEach(res => {
+          obj[`arr-${i}`].push({ id: res.id, ...res.data() });
+        });
+      });
+
+      let filteredObj;
+      Object.keys(obj).forEach((field, i) => {
+        if (!i) {
+          filteredObj = obj[field];
+        } else {
+          filteredObj = filteredObj.filter(item => {
+            const arrMap = obj[field].map(o => o.id);
+            return arrMap.includes(item.id);
           });
+        }
+      });
+      dispatch(fetchCollectionSuccess(filteredObj));
+      // console.log('filteredObj', filteredObj);
+    };
+
+    // if filter apply
+    if (allFilterValue.length) {
+      const filterPromises = [];
+      Object.keys(filter).forEach(async field => {
+        if (filter[field].length) {
+          const collectionRef = firestore
+            .collection('shop_cars')
+            .where(`property.${field}.value`, 'in', filter[field])
+            .get();
+
+          filterPromises.push(collectionRef);
+        }
+      });
+      helperCutArrays(filterPromises, dispatch);
+      // if filter not apply
+    } else {
+      const docRef = firestore.collection('shop_cars');
+      // dispatch(clearCollection());
+      // dispatch(fetchCollectionStart());
+      try {
+        const querySnapshot = await docRef.get();
+        const arr = [];
+        querySnapshot.forEach(function(doc) {
+          arr.push({ id: doc.id, ...doc.data() });
         });
         dispatch(fetchCollectionSuccess(arr));
-        console.log('arr', arr);
-      })
-      .catch(error => dispatch(fetchCollectionFailure(error)));
-    // console.log('filterBy', filterBy);
-    // console.log('filterPromises', filterPromises);
-    // console.log('filterBy', Object.keys(filterBy));
-
-    // const dbPromises = [];
+      } catch (error) {
+        dispatch(fetchCollectionFailure(error));
+      }
+    }
   }
-  // const dbPromises = [];
-  // for (let i = 0; i < filter.color.length; i++) {
-  //   console.log(filter.color);
-  //   // dbPromises.push(
-  //   //   firestore
-  //   //     .collection('shop_cars')
-  //   //     .where('property.color.value', '==', 0)
-  //   //     .get()
-  //   // );
-  // }
-
-  // Promise.all(dbPromises);
-
-
-
-
-
-  // const docRef = firestore.collection('shop_cars').where('property.color.value', '==', 'white');
-
-  // // dispatch(clearCollection());
-  // // dispatch(fetchCollectionStart());
-  // docRef
-  //   .get()
-  //   .then(querySnapshot => {
-  //     // console.log('querySnapshot');
-  //     // console.log(querySnapshot);
-  //     const arr = [];
-  //     querySnapshot.forEach(function(doc) {
-  //       arr.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     dispatch(fetchCollectionSuccess(arr));
-  //   })
-  //   .catch(error => dispatch(fetchCollectionFailure(error)));
 };
+
+// // if filter apply
+// if (allFilterValue.length) {
+//   const filterPromises = [];
+//   Object.keys(filter).forEach(field => {
+//     if (filter[field].length) {
+//       // console.log('field', field);
+//       filter[field].forEach(value => {
+//         // console.log(field, value);
+//         filterPromises.push(
+//           firestore
+//             .collection('shop_cars')
+//             .where(`property.${field}.value`, '==', `${value}`)
+//             .get()
+//         );
+//       });
+//     }
+//   });
+//   const arrayByFiltering = await Promise.all(filterPromises);
+//   try {
+//     const arr = [];
+//     arrayByFiltering.forEach(querySnapshot => {
+//       querySnapshot.forEach(function(doc) {
+//         const found = arr.some(el => el.id === doc.id); // если в массиве есть елемент с таким id то не добавлять
+//         if (!found) arr.push({ id: doc.id, ...doc.data() });
+//       });
+//     });
+//     // dispatch(fetchCollectionSuccess(arr));
+//   } catch (error) {
+//     // dispatch(fetchCollectionFailure(error));
+//   }
+
+//   // if filter not apply
+// }
+
+// console.log('field', field);
+// console.log(field, filter[field]);
+
+// const collectionRef = firebase.firestore().collection('Books')
+// collectionRef.where('d.details.BookType',"==",BookType)
+// collectionRef = collectionRef.where('d.details.bookage',"<=",age)
+// collectionRef = collectionRef.orderBy('d.details.bookage')
+// collectionRef.orderBy('g').startAt(query[0]).endAt(query[1])
+// .where(`property.color.value`, 'in', ['blue', 'white'])
+// .where(`property.bodyStyle.value`, 'in', ['suv'])
+// .where('brand', '==', 'honda')
+// .where('brand', '==', 'honda')
+// .where()
+// .where('model', '==', 'CR-V')
+// .where(`property.${field}.value`, 'in', filter[field])
