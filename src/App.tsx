@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import HeaderComponent from './header/header.component';
+// import HeaderComponent from './header/header.component';
 import MainComponent from './main/main.component';
 import CustomLayoutComponent from './helper/component/custom-layout/custom-layout.component';
 import CatalogComponent from './catalog/catalog.component';
@@ -14,6 +14,7 @@ import { setCurrentUserAsync, logoutAsync } from './redux/user/user.action';
 import { loadCartFromLS } from './redux/cart/cart.action';
 import SettingsComponent from './settings/settings.component';
 import CartComponent from './cart/cart.component';
+import NavbarComponent from './header/navbar/navbar.component';
 
 const App = ({ currentUser, isFetching, cartItems, setCurrentUser, loadCartFromLS, logout }) => {
   React.useEffect(() => {
@@ -30,7 +31,8 @@ const App = ({ currentUser, isFetching, cartItems, setCurrentUser, loadCartFromL
   }
   return (
     <React.Fragment>
-      <HeaderComponent currentUser={currentUser} logout={logout} />
+      <NavbarComponent currentUser={currentUser} logout={logout} />
+      {/* <HeaderComponent currentUser={currentUser} logout={logout} /> */}
       <CustomLayoutComponent>
         <Switch>
           <Route exact path="/" component={MainComponent} />

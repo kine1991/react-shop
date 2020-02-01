@@ -54,15 +54,13 @@ export const FilterCatalog = ({ setFilter }) => {
   }, [history.location.search]);
 
   React.useEffect(() => {
-    console.log('query');
-    console.log(query);
     setParams();
     setFilter(query);
   }, [query, setFilter]);
 
   const setParams = () => {
     const searchString = queryString.stringify(query, { arrayFormat: 'comma' });
-    console.log(searchString);
+    // console.log(searchString);
     // if (searchString) {
     history.push({
       search: searchString
@@ -71,7 +69,7 @@ export const FilterCatalog = ({ setFilter }) => {
   };
 
   const clearParams = () => {
-    console.log('clear');
+    setQuery({ color: [], bodyStyle: [], driveTrain: [], fuelType: [], transmission: [] });
   };
 
   const handleChange = (e, group) => {

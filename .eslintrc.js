@@ -8,8 +8,12 @@ module.exports = {
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:prettier/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        // "plugin:import-order/recommended"
     ],
+    // "plugins": [
+    //     "import-order"
+    // ],
     // "extends": [
     //     "plugin:prettier/recommended",
     //     "prettier/flowtype",
@@ -53,7 +57,11 @@ module.exports = {
         "no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|val" }],
         "no-plusplus": "off",
         "prefer-object-spread": "off",
-        "no-bitwise":"off"
+        "no-bitwise":"off",
+        // "sort-imports": "off",
+        // "import/order": "off",
+        // "import-order/import-order": 2
+        // "import/order":"error"
     }
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { addItemToCart } from '../../redux/cart/cart.action';
 import { useHistory } from 'react-router';
 
-import { addItemToCart } from '../../redux/cart/cart.action';
 import { Card } from './card-catalog.styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
