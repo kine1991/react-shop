@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
+// import Container from 'react-bootstrap/Container';
 import { Styles, theme } from './layout.styles';
 import { ThemeProvider } from 'styled-components';
 
@@ -7,10 +7,10 @@ export const LayoutComponent: React.FunctionComponent = props => {
   return (
     <ThemeProvider theme={theme}>
       <Styles>
-        <Container>{props.children}</Container>
+        {/* <Container>{props.children}</Container> */}
       </Styles>
     </ThemeProvider>
   );
 };
 
-export default LayoutComponent;
+export default LayoutComponent; 

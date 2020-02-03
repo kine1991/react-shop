@@ -11,9 +11,9 @@ module.exports = {
         "plugin:@typescript-eslint/eslint-recommended",
         // "plugin:import-order/recommended"
     ],
-    // "plugins": [
-    //     "import-order"
-    // ],
+    "plugins": [
+        "react-hooks"
+    ],
     // "extends": [
     //     "plugin:prettier/recommended",
     //     "prettier/flowtype",
@@ -58,6 +58,8 @@ module.exports = {
         "no-plusplus": "off",
         "prefer-object-spread": "off",
         "no-bitwise":"off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error"
         // "sort-imports": "off",
         // "import/order": "off",
         // "import-order/import-order": 2

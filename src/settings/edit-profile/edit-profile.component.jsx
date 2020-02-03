@@ -19,13 +19,10 @@ const EditProfileComponent = ({ currentUser, editProfile }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>EditProfileComponent</h1>
+      <h1>Change Name Or Image</h1>
       <TextField inputRef={register} name="fullName" className="mb-3" fullWidth label="Enter fullName" type="search" variant="outlined" />
       <TextField inputRef={register} name="imageUrl" className="mb-3" fullWidth label="Enter imageUrl" helperText="Some important text" variant="outlined" />
       <Button type="submit" fullWidth variant="contained" className="mb-3">
-        Change
-      </Button>
-      <Button fullWidth type="button" variant="contained" color="primary">
         Change
       </Button>
     </form>

@@ -9,7 +9,8 @@ export const Styles = styled.div`
     /* display: block; */
     @media (max-width: 768px) {
       display: block;
-      background: red;
+      /* background: red; */
+      margin-bottom: 2rem;
     }
   }
   .large-screen {
@@ -18,5 +19,8 @@ export const Styles = styled.div`
       display: none;
       /* display: none; */
     }
+  }
+  .checkbox {
+    display: block;
   }
 `;

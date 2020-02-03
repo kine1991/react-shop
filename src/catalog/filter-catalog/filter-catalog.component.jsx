@@ -1,20 +1,16 @@
 import React from 'react';
-// import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
 import { firestore } from '../../firebase/firebase.utils';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import Button from '@material-ui/core/Button';
+import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 import { Styles } from './filter-catalog.styles';
-// import { fetchCollectionFilterAsync } from '../../redux/catalog/catalog.action';
 
 export const FilterCatalog = ({ setFilter }) => {
+  const [showFilter, setShowFilter] = React.useState(false);
   const [data, setData] = React.useState();
   const [query, setQuery] = React.useState({ color: [], bodyStyle: [], driveTrain: [], fuelType: [], transmission: [] });
   const isMounted = React.useRef(true);
@@ -51,21 +47,20 @@ export const FilterCatalog = ({ setFilter }) => {
     setQuery({ ...query, ...queryObject });
     // console.log('query', query);
     // setParams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history.location.search]);
 
   React.useEffect(() => {
     setParams();
     setFilter(query);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, setFilter]);
 
   const setParams = () => {
     const searchString = queryString.stringify(query, { arrayFormat: 'comma' });
-    // console.log(searchString);
-    // if (searchString) {
     history.push({
       search: searchString
     });
-    // }
   };
 
   const clearParams = () => {
@@ -93,31 +88,61 @@ export const FilterCatalog = ({ setFilter }) => {
   }
   return (
     <Styles>
-      <div className="small-screen">small-screen</div>
+      <div className="small-screen">
+        <Button onClick={() => setShowFilter(!showFilter)} variant="contained" color="primary" startIcon={showFilter ? <KeyboardArrowUp /> : <KeyboardArrowDown />}>
+          {showFilter ? 'Hide' : 'Show'} Filter
+        </Button>
+        {showFilter && (
+          <div>
+            <h2>Filter By</h2>
+            {Object.keys(data).map(group => {
+              return (
+                <div key={data[group].name}>
+                  <strong>{data[group].name}</strong>
+                  <br />
+                  {data[group].value.map(item => {
+                    return (
+                      <FormControlLabel
+                        key={item}
+                        className="checkbox"
+                        control={<Checkbox checked={query[group].includes(item)} value={item} onClick={e => handleChange(e, group)} color="primary" />}
+                        label={item}
+                      />
+                    );
+                  })}
+                  <hr />
+                </div>
+              );
+            })}
+            <Button className="mt-3" onClick={() => clearParams()} fullWidth variant="contained">
+              Clear
+            </Button>
+          </div>
+        )}
+      </div>
+
       <div className="filter-container large-screen">
-        <h2>FilterCatalog</h2>
+        <h2>Filter By</h2>
         {Object.keys(data).map(group => {
-          // console.log(group)
           return (
-            <ExpansionPanel key={group}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-                <Typography>{data[group].name}</Typography>
-              </ExpansionPanelSummary>
+            <div key={data[group].name}>
+              <strong>{data[group].name}</strong>
+              <br />
               {data[group].value.map(item => {
-                // console.log('---', query[group]);
-                // console.log('+++', item);
                 return (
-                  <ExpansionPanelDetails key={item}>
-                    <FormControlLabel control={<Checkbox checked={query[group].includes(item)} value={item} onClick={e => handleChange(e, group)} color="primary" />} label={item} />
-                  </ExpansionPanelDetails>
+                  <FormControlLabel
+                    key={item}
+                    className="checkbox"
+                    style={{ marginTop: '-10px' }}
+                    control={<Checkbox checked={query[group].includes(item)} value={item} onClick={e => handleChange(e, group)} color="primary" />}
+                    label={item}
+                  />
                 );
               })}
-            </ExpansionPanel>
+              <hr />
+            </div>
           );
         })}
-        {/* <Button className="mt-3" fullWidth onClick={() => setParams()} variant="contained" color="primary">
-          Apply
-        </Button> */}
         <Button className="mt-3" onClick={() => clearParams()} fullWidth variant="contained">
           Clear
         </Button>

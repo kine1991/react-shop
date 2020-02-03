@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
-import Button from 'react-bootstrap/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+// import Button from 'react-bootstrap/Button';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { ArrowBack } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
 import { Styles } from './product.styles';
 import { fetchProductAsync } from '../../redux/product/product.action';
 import Spinner from '../../helper/component/spinner/spinner.component';
@@ -20,9 +22,12 @@ const ProductComponent = ({ data, fetchProduct }) => {
   }
   return (
     <Styles>
-      <Button onClick={() => push('/catalog/cars')} variant="light">
-        <FontAwesomeIcon icon={faArrowLeft} size="sm" className="cart" /> Back
+      <Button onClick={() => push('/catalog')} variant="contained" color="default" startIcon={<ArrowBack />}>
+        Back
       </Button>
+      {/* <Button onClick={() => push('/catalog')} variant="light">
+        <FontAwesomeIcon icon={faArrowLeft} size="sm" className="cart" /> Back
+      </Button> */}
       <div className="header">
         <h1 className="header__title">
           {data.brand} {data.model}

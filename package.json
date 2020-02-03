@@ -20,8 +20,6 @@
     "prettier": "^1.19.1",
     "query-string": "^6.10.1",
     "react": "^16.12.0",
-    "react-bootstrap": "^1.0.0-beta.16",
-    "react-bootstrap-multiselect": "^2.4.1",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.6.2",
     "react-redux": "^7.1.3",

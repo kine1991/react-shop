@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,39 +12,22 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
-
-import styled from 'styled-components';
+import { logoutAsync } from '../../redux/user/user.action';
 import CartDropdown from '../../cart/cart-dropdown/cart-dropdown.component';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { Styles } from './navbar.styles';
 
-export const Styles = styled.div`
-  position: relative;
-  z-index: 10;
-
-  .cart-icon {
-    position: relative;
-  }
-
-  .cart-number {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: rebeccapurple;
-    color: white;
-    font-weight: 400;
-    width: 16px;
-    height: 16px;
-    // padding: 5px;
-    font-size: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-  }
-`;
-
-const NavbarComponent = ({ currentUser, logout }) => {
+const NavbarComponent = ({ currentUser, cartItemsCount, logout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [cartIsOpen, setCartIsOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -53,54 +37,63 @@ const NavbarComponent = ({ currentUser, logout }) => {
     setAnchorEl(null);
   };
 
-  const handleDorpdownCart = () => {
-    // console.log('handleDorpdownCart');
-    setCartIsOpen(!cartIsOpen);
+  const handleLogout = () => {
+    handleClose();
+    logout();
   };
 
-  // const handleDorpdownCart = () => {
-  //   // console.log('handleDorpdownCart');
-  //   setCartIsOpen(!cartIsOpen);
-  // };
+  const handleDorpdownCart = () => {
+    setCartIsOpen(!cartIsOpen);
+  };
+  const sidebar = (
+    <div className="sidebar" role="presentation">
+      <List className="sidebar">
+        <ListItem component={Link} to="/">
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem component={Link} to="/catalog">
+          <ListItemText primary="Catalog" />
+        </ListItem>
+      </List>
+    </div>
+  );
 
   return (
     <Styles>
       <AppBar color="default" position="static">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
+          <IconButton onClick={handleDrawerToggle} className="menu-icon" edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">ShopCar</Typography>
+          <Typography className="brand" variant="h6">
+            ShopCar
+          </Typography>
           <div className="ml-auto"></div>
-          <Button component={Link} to="/" color="inherit">
+          <Button className="desk_side-nav" component={Link} to="/" color="inherit">
             Home
           </Button>
-          <Button component={Link} to="/catalog" color="inherit">
+          <Button className="desk_side-nav" component={Link} to="/catalog" color="inherit">
             Catalog
           </Button>
           <div className="cart-dropdown">
             <div className="cart-icon mx-3" aria-controls="simple-menu" onClick={handleDorpdownCart}>
-              <FontAwesomeIcon className="cart-icon" onClick={() => console.log('item')} icon={faCartPlus} />
-              <span className="cart-number">10</span>
-              {/* <FontAwesomeIcon onClick={() => console.log('item')} icon={faCaretDown} size="sm" /> */}
+              <FontAwesomeIcon className="cart-icon" icon={faCartPlus} />
+              <span className="cart-number">{cartItemsCount}</span>
             </div>
             {cartIsOpen && <CartDropdown setCartIsOpen={setCartIsOpen} />}
           </div>
           {currentUser ? (
             <React.Fragment>
-              <span className="mx-1">{currentUser.fullName}</span>
-              <Avatar className="mx-1" alt="Remy Sharp" src={currentUser.imageUrl} />
               <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                <FontAwesomeIcon className="" onClick={() => console.log('item')} size="sm" icon={faCaretDown} />
+                <span>{currentUser.fullName}</span>
+                <Avatar className="mx-1" alt="Remy Sharp" src={currentUser.imageUrl} />
+                <FontAwesomeIcon size="xs" icon={faCaretDown} />
               </Button>
               <Menu id="simple-menu2" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem component={Link} to="/settings/profile" onClick={handleClose}>
-                  Profile
+                <MenuItem component={Link} to="/settings/edit-profile" onClick={handleClose}>
+                  EditProfile
                 </MenuItem>
-                <MenuItem component={Link} to="/settings" onClick={handleClose}>
-                  My account
-                </MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </React.Fragment>
           ) : (
@@ -115,8 +108,34 @@ const NavbarComponent = ({ currentUser, logout }) => {
           )}
         </Toolbar>
       </AppBar>
+      <nav className="sidebar" aria-label="mailbox folders">
+        <Drawer
+          className="sidebar"
+          // container={container}
+          variant="temporary"
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true // Better open performance on mobile.
+          }}
+        >
+          {sidebar}
+        </Drawer>
+      </nav>
     </Styles>
   );
 };
 
-export default NavbarComponent;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+  cartItemsCount: state.cart.cartItems.reduce((acc, cur) => {
+    return acc + cur.quantity;
+  }, 0)
+});
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutAsync())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavbarComponent);

@@ -16,15 +16,14 @@ export const Styles = styled.div`
     }
   }
   .filter {
-    /* background: #C0C0C0; */
-    /* height: 400px; */
-    flex-basis: 200px;
+    /* flex-basis: 200px; */
     margin-right: 3rem;
     @media (max-width: 1200px) {
       margin-right: 2rem;
     }
     @media (max-width: 768px) {
       margin-right: 0;
+      /* flex-basis: 0; */
     }
   }
   .content {

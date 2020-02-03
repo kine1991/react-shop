@@ -37,6 +37,7 @@ export const fetchCollectionAsync = () => (dispatch, getState) => {
 };
 
 export const fetchCollectionFilterAsync = filter => async dispatch => {
+  // dispatch(fetchCollectionStart());
   if (filter) {
     const allFilterValue = [];
     Object.keys(filter).forEach(field => {

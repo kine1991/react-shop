@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// import { useParams } from "react-router";
-
 import { fetchCollectionAsync, fetchCollectionFilterAsync } from '../redux/catalog/catalog.action';
 import Spinner from '../helper/component/spinner/spinner.component';
 import { Styles } from './catalog.styles';
@@ -17,15 +15,12 @@ const CatalogComponent = ({ items, isFetching, fetchCollectionAsync, fetchCollec
 
   React.useEffect(() => {
     fetchCollectionFilterAsync(filter);
-    // if (filter) {
-    //   // console.log('filter');
-    //   // console.log(filter);
-    // }
   }, [filter, fetchCollectionFilterAsync]);
 
   if (isFetching) {
     return <Spinner color="gray" />;
   }
+
   return (
     <Styles>
       <div className="filter-content">

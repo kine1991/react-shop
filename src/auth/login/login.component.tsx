@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
+// import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
+// import Spinner from 'react-bootstrap/Spinner';
 import { loginAsync, signUpWithGoogleAsync } from '../../redux/user/user.action';
+import { Button, TextField } from '@material-ui/core';
 
 const LoginComponent = ({ isFetchingForBtn, loginUser, signUpWithGoogle }) => {
   const { register, handleSubmit } = useForm();
@@ -13,29 +14,16 @@ const LoginComponent = ({ isFetchingForBtn, loginUser, signUpWithGoogle }) => {
     loginUser(data);
   };
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" name="email" ref={register} placeholder="Enter email" />
-        {/* <Form.Text className="text-muted">We will never share your email with anyone else.</Form.Text> */}
-      </Form.Group>
-
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control name="password" ref={register} type="password" placeholder="Password" />
-      </Form.Group>
-      <Button block type="submit" variant="primary" disabled={isFetchingForBtn}>
-        {isFetchingForBtn ? (
-          <>
-            <span className="mr-3">Login</span>
-            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-          </>
-        ) : (
-          <span>Login</span>
-        )}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <TextField className="mb-3" fullWidth type="email" name="email" inputRef={register} label="Enter email" variant="outlined" />
+      <TextField className="mb-3" fullWidth name="password" inputRef={register} type="password" label="Enter password" variant="outlined" />
+      <Button className="mb-3" fullWidth color="primary" variant="contained" type="submit">
+        Login
       </Button>
-      <Button block onClick={signUpWithGoogle} type="button" variant="danger" disabled={isFetchingForBtn}>With Google</Button>
-    </Form>
+      <Button className="mb-3" fullWidth onClick={signUpWithGoogle} type="button" variant="outlined" color="secondary">
+        With Google
+      </Button>
+    </form>
   );
 };
 
